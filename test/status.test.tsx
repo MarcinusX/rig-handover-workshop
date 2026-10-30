@@ -18,3 +18,11 @@ describe('status board', () => {
     expect(await res.json()).toEqual({ ok: true, lane: 'lane-07' });
   });
 });
+
+describe('board links', () => {
+  it('links each night to its digest with counts', async () => {
+    const html = await (await createApp(config).request('/')).text();
+    expect(html).toMatch(/<a href="\/digest\/2026-10-28">2026-10-28<\/a> · ok \d+ · retry \d+ · fail \d+/);
+    expect(html).toContain('href="/digest/2026-10-27"');
+  });
+});
